@@ -103,14 +103,14 @@ def iniciar_lancamento(driver, df, log_callback):
 class App:
     def __init__(self, root):
         self.root = root
-        self.root.title("Lançador de Notas SED")
+        self.root.title("Lançador de Notas")
 
         self.caminho_csv = ""
 
         self.btn_chrome = tk.Button(root, text="📎 Abrir Chrome (modo conectado)", command=self.abrir_chrome)
         self.btn_chrome.pack(pady=5)
 
-        self.btn_csv = tk.Button(root, text="📂 Selecionar CSV", command=self.selecionar_csv)
+        self.btn_csv = tk.Button(root, text="📂 Selecionar CSV (Planilha de Notas)", command=self.selecionar_csv)
         self.btn_csv.pack(pady=5)
 
         self.btn_iniciar = tk.Button(root, text="▶️ Iniciar Lançamento", command=self.iniciar, state=tk.DISABLED)
@@ -143,13 +143,6 @@ class App:
             self.log("🌐 Chrome aberto em modo conectado. Aguarde ele carregar antes de continuar.")
         else:
             messagebox.showerror("Erro", "Não foi possível abrir o Chrome automaticamente.")
-            messagebox.showwarning("Chrome Aberto", "Feche todas as janelas do Chrome antes de usar esse botão.")
-            return
-
-        if abrir_chrome_debug():
-            self.log("🌐 Chrome aberto em modo conectado. Aguarde ele carregar antes de continuar.")
-        else:
-            messagebox.showerror("Erro", "Não foi possível abrir o Chrome automaticamente.")
 
     def selecionar_csv(self):
         caminho = filedialog.askopenfilename(filetypes=[("Arquivos CSV", "*.csv")])
@@ -159,14 +152,53 @@ class App:
             self.btn_iniciar.config(state=tk.NORMAL)
 
     def mostrar_ajuda(self):
-        texto_ajuda = (
-            "1️⃣ Acesse a SED e vá em: Centro de Mídias → Tarefas → Relatório de Atividades do CMSP"
-            "2️⃣ Clique em 'Gerar Excel' e selecione 'Arquivo CSV sem formatação'"
-            "3️⃣ Renomeie o arquivo com o nome da turma, como: 1A.csv, 2B.csv, etc."
-            "4️⃣ No app: Abra o Chrome, vá até a aba de lançamento de notas"
-            "5️⃣ Selecione o CSV e clique em 'Iniciar Lançamento'"
+        ajuda_janela = tk.Toplevel(self.root)
+        ajuda_janela.title("Ajuda - Como usar o Lançador de Notas")
+        ajuda_janela.geometry("520x420")
+
+        # Centraliza a janela de ajuda na tela
+        ajuda_janela.update_idletasks()
+        largura = ajuda_janela.winfo_width()
+        altura = ajuda_janela.winfo_height()
+        x = (ajuda_janela.winfo_screenwidth() // 2) - (largura // 2)
+        y = (ajuda_janela.winfo_screenheight() // 2) - (altura // 2)
+        ajuda_janela.geometry(f"+{x}+{y}")
+
+        # Faz com que a janela de ajuda fique acima da principal e bloqueie interação
+        ajuda_janela.transient(self.root)
+        ajuda_janela.grab_set()
+
+        texto = (
+            "🧾 PASSO A PASSO\n\n"
+            "1️ Acesse a SED e vá em:\n"
+            "   Centro de Mídias → Tarefas → Relatório de Atividades do CMSP\n\n"
+            "2️ Clique em 'Gerar Excel' e selecione:\n"
+            "   'Arquivo CSV sem formatação'\n\n"
+            "3️ Renomeie o arquivo com o nome da turma:\n"
+            "   Exemplo: 1A, 2B, 3C...\n\n"
+            "4️ No aplicativo Lançador de Notas:\n"
+            "   - Abra o Chrome (modo conectado)\n"
+            "   - Acesse a Sala do Futuro e vá até a página de lançamento das notas\n"
+            "   - Selecione o CSV (Planilha com as notas)\n"
+            "   - Clique em 'Iniciar Lançamento'"
         )
-        messagebox.showinfo("Ajuda - Como usar o Lançador de Notas", texto_ajuda)
+
+        frame_texto = tk.Frame(ajuda_janela)
+        frame_texto.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        scrollbar = tk.Scrollbar(frame_texto)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        text_widget = tk.Text(frame_texto, wrap=tk.WORD, yscrollcommand=scrollbar.set, font=("Segoe UI", 11))
+        text_widget.insert(tk.END, texto)
+        text_widget.config(state=tk.DISABLED)
+        text_widget.pack(fill=tk.BOTH, expand=True)
+        scrollbar.config(command=text_widget.yview)
+
+        btn_fechar = tk.Button(ajuda_janela, text="Fechar", command=ajuda_janela.destroy)
+        btn_fechar.pack(pady=5)
+
+        ajuda_janela.focus_set()  # garante que a janela pegue o foco
 
     def iniciar(self):
         threading.Thread(target=self.executar_processo).start()
