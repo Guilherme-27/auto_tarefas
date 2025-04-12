@@ -28,4 +28,4 @@ O app já está empacotado em `.exe` para Windows e pode ser baixado na página 
 ## 📋 Requisitos
 
 - Windows com **Google Chrome** instalado
-- Arquivo CSV exportado da SED (TarefaSP)
+- Arquivo CSV importado da SED (TarefaSP)
