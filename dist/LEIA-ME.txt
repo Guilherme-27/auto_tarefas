@@ -1,0 +1,32 @@
+📘 LEIA-ME — Lançador de Notas
+
+Este aplicativo foi desenvolvido para ajudar professores da rede pública estadual de São Paulo a lançar as notas das tarefas do CMSP de forma rápida e automatizada.
+
+⚙️ REQUISITOS:
+- Google Chrome instalado no computador
+- Windows (testado no Windows 10 e 11)
+- Arquivo .csv gerado pela SED (Centro de Mídias → Tarefas → Relatório de Atividades do CMSP)
+
+🚀 COMO USAR:
+
+1️⃣ Descompacte este arquivo ZIP em uma pasta do seu computador.
+   👉 Não execute diretamente de dentro do ZIP!
+
+2️⃣ Dê dois cliques em `LancaNotas.exe` para abrir o programa.
+
+3️⃣ Clique em 📎 "Abrir Chrome (modo conectado)" e aguarde o navegador abrir.
+   ⚠️ Se o Chrome já estiver aberto, feche todas as janelas antes.
+
+4️⃣ No navegador aberto, entre com seu login no Sala do Futuro e vá até a tela de "Lançamento das Avaliações".
+
+5️⃣ No programa, clique em 📂 "Selecionar CSV" e escolha o arquivo da turma (ex: 1A.csv).
+
+6️⃣ Clique em ▶️ "Iniciar Lançamento" e acompanhe os registros no campo de log.
+
+ℹ️ DICA:
+- A primeira vez que rodar o app pode aparecer um aviso do Windows SmartScreen. Clique em "Mais informações" e depois em "Executar assim mesmo".
+
+📽️ Vídeo tutorial disponível em: 
+https://guilherme-27.github.io/lancador-notas-sed-site/
+
+🛠️ Desenvolvido com carinho por um professor em parceria com a tecnologia.
